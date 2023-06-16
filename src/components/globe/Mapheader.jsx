@@ -2,6 +2,9 @@ import * as React from "react";
 import { useState, useMemo, useCallback } from "react";
 
 import Map, { Source, Layer, NavigationControl } from "react-map-gl";
+import bbox from '@turf/bbox';
+import * as turf from '@turf/turf'
+
 import "mapbox-gl/dist/mapbox-gl.css";
 import sourcePlates from "../../sources_plates.json";
 import {
@@ -18,6 +21,40 @@ import MapControls from "./MapControls";
 export const Mapheader = ({ seismes }) => {
   const [hoverInfo, setHoverInfo] = useState(null);
   const [cursor, setCursor] = useState("auto");
+  const [seismesGEOJSON, setSeismesGEOJSON] = useState(sourceSeismes(seismes))
+  const mapRef = React.useRef();
+  React.useEffect(() => {
+    if (mapRef.current) onLoad()
+  }, [seismes])
+
+
+  const onLoad = () => {
+    console.log('onLoad')
+    if (seismes.length > 1) {
+      setSeismesGEOJSON(sourceSeismes(seismes))
+      let newCoord = []
+      for (const feature of sourceSeismes(seismes).features) {
+        newCoord.push(feature.geometry.coordinates)
+      }
+
+      const [minLng, minLat, maxLng, maxLat] = bbox(turf.lineString(newCoord));
+      console.log(mapRef)
+      mapRef.current.getMap().fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat]
+        ],
+        { padding: 100, duration: 1000 }
+      );
+    }
+    if(seismes.length === 1){
+      let lat = seismes[0].lat
+      let lng = seismes[0].lon
+      mapRef.current.getMap().setCenter([lng, lat])
+      mapRef.current.getMap().setZoom(5)
+    }
+  }
+
 
   const selectedPlateName = (hoverInfo && hoverInfo.properties.PlateName) || "";
   const filter = useMemo(
@@ -35,13 +72,14 @@ export const Mapheader = ({ seismes }) => {
       properties: feature && feature.properties,
     });
   }, []);
-
   const onMouseEnter = useCallback(() => setCursor("pointer"), []);
   const onMouseLeave = useCallback(() => setCursor("auto"), []);
+
 
   return (
     <section>
       <Map
+        ref={mapRef}
         initialViewState={{
           longitude: -122.4,
           latitude: 37.8,
@@ -57,6 +95,8 @@ export const Mapheader = ({ seismes }) => {
         cursor={cursor}
         projection="globe"
         onClick={false}
+        onLoad={onLoad}
+        // onSourceData={onLoad}
         scrollZoom={false}
         onMouseMove={onHover}
         onMouseEnter={onMouseEnter}

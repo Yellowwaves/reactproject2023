@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Map from "./pages/Map";
 import List from "./pages/List";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import './App.css'
 import { useEffect } from 'react'
