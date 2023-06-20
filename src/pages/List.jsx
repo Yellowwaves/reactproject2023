@@ -3,6 +3,7 @@ import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 //import Button from 'react-bootstrap/Button';
 import Filter from "../components/Filter";
+import FicheFiltre from "../components/CardFiltre";
 import { Mapheader } from "../components/globe/Mapheader";
 
 
@@ -43,32 +44,13 @@ function List({ source, link }) {
         </div>
         <div className="col-md-8">
           <h1>Liste des séismes</h1>
-          <table className="table table-dark">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Pays</th>
-                <th>Magnitude</th>
-                <th>Profondeur</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredSeismes && filteredSeismes.map((seisme) => (
-                <tr key={seisme.id}>
-                  <td>{seisme.id}</td>
-                  <td>{seisme.instant}</td>
-                  <td>{seisme.lat}</td>
-                  <td>{seisme.lon}</td>
-                  <td>{seisme.pays}</td>
-                  <td>{seisme.mag}</td>
-                  <td>{seisme.profondeur}</td>
-                </tr>
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+              {filteredSeismes.map((seisme) => (
+                <div className="col" key={seisme.id}>
+                    <FicheFiltre key={seisme.id} seisme={seisme} />
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
           <button className="btn btn-primary" onClick={() => link("map")}>
             Carte
           </button>
