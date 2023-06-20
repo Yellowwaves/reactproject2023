@@ -1,22 +1,17 @@
 import React from 'react';
 import TypingEffect from 'react-typing-effect';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Header() {
 return (
-<Navbar bg="light" expand="lg" sticky="top">
-<Container>
-<Navbar.Brand>
-<TypingEffect
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1"><TypingEffect
          text="Projet Symfony/React 2023 - Séismes"
          speed={20}
          eraseDelay={1000}
          eraseSpeed={50}
-       />
-</Navbar.Brand>
-</Container>
-</Navbar>
+       /></span>
+</nav>
 );
 }
 
