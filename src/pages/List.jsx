@@ -14,11 +14,12 @@ function List({ source, link }) {
     let newFilteredSeismes = source.seismes;
     console.log('Filtre de liste', country, ",", magnitude)
 
-    if (country && country !== -1) {
-      newFilteredSeismes = newFilteredSeismes.filter((seisme) => seisme.pays === country);
+    if (country && country != -1) {
+      newFilteredSeismes = newFilteredSeismes.filter((seisme) => {return seisme.pays === country});
+      console.log('Le chat est dans le sac')
     }
 
-    if (magnitude && magnitude !== -1) {
+    if (magnitude && magnitude != 0) {
       newFilteredSeismes = newFilteredSeismes.filter((seisme) => {
         return seisme.mag >= magnitude - 1 && seisme.mag < magnitude
       })
