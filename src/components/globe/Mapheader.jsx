@@ -89,7 +89,7 @@ export const Mapheader = ({ seismes }) => {
         style={{ width: "100%", height: "80vh" }}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         mapboxAccessToken={
-          "pk.eyJ1IjoiamVvZnVuIiwiYSI6ImNrd3huZXZjMzAwMWkycXFtb29zeDMxdnMifQ.N0SyKbZ6Br7bCL0IPmUZIg"
+          "PRIVATE KEY"
         }
         interactiveLayerIds={["plaques-bg", "unclustered-point"]}
         cursor={cursor}
