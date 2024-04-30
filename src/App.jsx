@@ -12,7 +12,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true); // Nouvel état pour l'indicateur de chargement
 
   useEffect(() => {
-    fetch('https://isenapi.koality.pw/api/seismes/15')
+    fetch('http://127.0.0.1:8000/api/1000')
       .then(res => res.json())
       .then(json => {
         setSeismes(json);
